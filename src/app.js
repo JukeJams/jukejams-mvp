@@ -5,7 +5,7 @@ import QueueEntry from './queueEntry.js';
 // import exampleVideoData from '../fakeData.js';
 import GoogleLogin from 'react-google-login';
 import axios from 'axios';
-import { YOUTUBE_API_KEY, OAUTH_CLIENT_ID, PORT } from '../config.js';
+import { YOUTUBE_API_KEY, OAUTH_CLIENT_ID, PORT, SECRET } from '../config.js';
 import { Route, BrowserRouter, Link } from 'react-router-dom';
 import $ from 'jquery';
 import player from './youTubeScript.js';
@@ -290,7 +290,7 @@ class App extends Component {
         />
       );
     }
-    if (!loginComplete) {
+    if (loginComplete) {
       return (
         <GoogleLogin
           clientId={OAUTH_CLIENT_ID}
@@ -298,6 +298,7 @@ class App extends Component {
           onSuccess={this.responseGoogle}
           onFailure={this.responseGoogle}
           cookiePolicy={'single_host_origin'}
+          secret={SECRET}
         />
       );
     }

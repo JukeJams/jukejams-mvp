@@ -1,7 +1,9 @@
 var tag = document.createElement('script');
 
 function getNextVid() {
-  return axios.get(`http://localhost:3000/party/${accessCode}`);
+  return axios.get(
+    `http://jukey-db.c0ovotldczny.us-east-1.rds.amazonaws.com:3306${accessCode}`
+  );
 }
 
 tag.src = 'https://www.youtube.com/iframe_api';
@@ -38,10 +40,13 @@ let songsPlayed = {};
 let currentSongIndex = 0;
 
 function onPlayerStateChange(event) {
-  axios.put(`http://localhost:3000/party/`, {
-    nowPlaying: window.ytPlayer.getVideoData()['video_id'],
-    accessCode,
-  });
+  axios.put(
+    'http://jukey-db.c0ovotldczny.us-east-1.rds.amazonaws.com:3306/party/',
+    {
+      nowPlaying: window.ytPlayer.getVideoData()['video_id'],
+      accessCode,
+    }
+  );
   if (event.data === 0) {
     // If video ended
     songsPlayed[window.ytPlayer.getVideoData()['video_id']] = 'played'; // Save song id to avoid repeat
